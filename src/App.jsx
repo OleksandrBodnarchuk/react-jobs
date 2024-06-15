@@ -54,6 +54,7 @@ function App() {
           element={<JobPage deleteJob={deleteJob} />}
           loader={jobLoader}
         />
+        <Route path="/jobs/:id" element={<JobPage />} loader={jobLoader} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     )
@@ -63,4 +64,3 @@ function App() {
 }
 
 export default App;
-
