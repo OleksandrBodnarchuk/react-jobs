@@ -1,23 +1,47 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const AddJobPage = () => {
+const AddJobPage = ({ addJobSubmit }) => {
   const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Full-Time");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
-  const [salary, setSalary] = useState("");
+  const [salary, setSalary] = useState("Under $50K");
   const [companyName, setCompanyName] = useState("");
   const [companyDescription, setCompanyDescription] = useState("");
   const [contactEmail, setContactEmail] = useState("");
-  const [conatactPhone, setPhone] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+
+  const navigate = useNavigate();
+
+  const submitAddJobForm = (e) => {
+    e.preventDefault();
+    const newJob = {
+      id: null,
+      title,
+      type,
+      location,
+      description,
+      salary,
+      company: {
+        id: null,
+        name: companyName,
+        description: companyDescription,
+        contactEmail,
+        contactPhone,
+      },
+    };
+    addJobSubmit(newJob);
+    return navigate("/jobs");
+  };
 
   return (
     <>
       <section className="bg-indigo-50">
         <div className="container m-auto max-w-2xl py-24">
           <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-            <form>
+            <form onSubmit={submitAddJobForm}>
               <h2 className="text-3xl text-center font-semibold mb-6">
                 Add Job
               </h2>
@@ -33,6 +57,8 @@ const AddJobPage = () => {
                   id="type"
                   name="type"
                   className="border rounded w-full py-2 px-3"
+                  value={type}
+                  onChange={(event) => setType(event.target.value)}
                   required
                 >
                   <option value="Full-Time">Full-Time</option>
@@ -52,6 +78,8 @@ const AddJobPage = () => {
                   name="title"
                   className="border rounded w-full py-2 px-3 mb-2"
                   placeholder="eg. Beautiful Apartment In Miami"
+                  value={title}
+                  onChange={(event) => setTitle(event.target.value)}
                   required
                 />
               </div>
@@ -68,6 +96,8 @@ const AddJobPage = () => {
                   className="border rounded w-full py-2 px-3"
                   rows="4"
                   placeholder="Add any job duties, expectations, requirements, etc"
+                  value={description}
+                  onChange={(event) => setDescription(event.target.value)}
                 ></textarea>
               </div>
 
@@ -83,6 +113,8 @@ const AddJobPage = () => {
                   name="salary"
                   className="border rounded w-full py-2 px-3"
                   required
+                  value={salary}
+                  onChange={(event) => setSalary(event.target.value)}
                 >
                   <option value="Under $50K">Under $50K</option>
                   <option value="$50K - 60K">$50K - $60K</option>
@@ -108,6 +140,8 @@ const AddJobPage = () => {
                   name="location"
                   className="border rounded w-full py-2 px-3 mb-2"
                   placeholder="Company Location"
+                  value={location}
+                  onChange={(event) => setLocation(event.target.value)}
                   required
                 />
               </div>
@@ -127,6 +161,8 @@ const AddJobPage = () => {
                   name="company"
                   className="border rounded w-full py-2 px-3"
                   placeholder="Company Name"
+                  value={companyName}
+                  onChange={(event) => setCompanyName(event.target.value)}
                 />
               </div>
 
@@ -143,6 +179,10 @@ const AddJobPage = () => {
                   className="border rounded w-full py-2 px-3"
                   rows="4"
                   placeholder="What does your company do?"
+                  value={companyDescription}
+                  onChange={(event) =>
+                    setCompanyDescription(event.target.value)
+                  }
                 ></textarea>
               </div>
 
@@ -159,6 +199,8 @@ const AddJobPage = () => {
                   name="contact_email"
                   className="border rounded w-full py-2 px-3"
                   placeholder="Email address for applicants"
+                  value={contactEmail}
+                  onChange={(event) => setContactEmail(event.target.value)}
                   required
                 />
               </div>
@@ -175,6 +217,8 @@ const AddJobPage = () => {
                   name="contact_phone"
                   className="border rounded w-full py-2 px-3"
                   placeholder="Optional phone for applicants"
+                  value={contactPhone}
+                  onChange={(event) => setContactPhone(event.target.value)}
                 />
               </div>
 
